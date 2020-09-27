@@ -1,8 +1,11 @@
 from flask import Blueprint, render_template, flash, redirect
-from utils import forms, password
+from utils import forms
+from flask_login import current_user, login_user
+from models.models import User
 
 
 main = Blueprint('main', __name__, template_folder='templates')
+
 
 @main.route('/')
 def index():
@@ -11,12 +14,15 @@ def index():
 
 @main.route('/login', methods=['GET', 'POST'])
 def login():
+	if current_user.is_authenticated:
+		return redirect('/')
 	form = forms.LoginForm()
-	if form.validate_on_submit() and password.validate(form.data):
-		flash('Logging in')
-		return redirect('/chat')
-	return render_template('login.html', title='Login', form=form)
-
+	user = User.query.filter_by(username=form.username.data).first()
+	if user is None or not user.check_password(form.password.data):
+		flash('Invalid username or password')
+		return redirect('/login')
+	login_user(user)
+	return redirect('/chat')
 
 @main.route('/chat')
 def chat():
