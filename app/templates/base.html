@@ -12,14 +12,14 @@
           <div class="center">
             {% if logged_user %}
             <h4>Logged in as musician</h4>
-            <form action="{{  url_for('main.main_logout')  }}" method="POST">
-                <a id="nav_home" href="{{  url_for('main.index')  }}">Home</a>&nbsp;&nbsp;&nbsp;&nbsp;
-                <a id="nav_chat" href="{{  url_for('main.index')  }}">Chat Room</a>&nbsp;&nbsp;&nbsp;&nbsp;
-                <a id="nav_gallery" href="{{  url_for('main.index')  }}">Gallery</a>&nbsp;&nbsp;&nbsp;&nbsp;
+            <form action="{{  url_for('main_logout')  }}" method="POST">
+                <a id="nav_home_user" href="{{  url_for('index')  }}">Home</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                <a id="nav_chat" href="{{  url_for('index')  }}">Chat Room</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                <a id="nav_gallery" href="{{  url_for('index')  }}">Gallery</a>&nbsp;&nbsp;&nbsp;&nbsp;
                 <input id="nav_logout" type="submit" value="Logout"></form>
             {% else %}
-              <a id="nav_home" href="{{  url_for('main.index')  }}">Home</a>&nbsp;&nbsp;&nbsp;&nbsp;
-              <a id="home_login" href="{{  url_for('main.login')  }}">Login</a>&nbsp;&nbsp;&nbsp;&nbsp;
+              <a id="nav_home_default" href="{{  url_for('index')  }}">Home</a>&nbsp;&nbsp;&nbsp;&nbsp;
+              <a id="nav_login" href="{{  url_for('login')  }}">Login</a>&nbsp;&nbsp;&nbsp;&nbsp;
             {% endif %}
 
             <br><br>
