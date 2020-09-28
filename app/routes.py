@@ -1,8 +1,12 @@
-from flask import render_template, flash, redirect
+from flask import render_template, flash, redirect, session
 from flask_login import current_user, login_user, logout_user
 from app import app, forms
 from app.models import User
-from datetime import timedelta
+
+
+@app.before_request
+def modify_session():
+	session.modified = True
 
 
 @app.route('/')
@@ -20,7 +24,7 @@ def login():
 		if user is None or not user.check_password(form.password.data):
 			flash('Invalid username or password')
 			return redirect('/login')
-		login_user(user, duration=timedelta(days=0, seconds=3, microseconds=0, milliseconds=0, minutes=0, hours=0, weeks=0))
+		login_user(user)
 		return redirect('/chat')
 	return render_template('login.html', title='Login', form=form)
 
