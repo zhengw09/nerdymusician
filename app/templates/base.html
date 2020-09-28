@@ -12,9 +12,9 @@
 
           <div class="center">
             {% if current_user.is_authenticated %}
-            <h4>Logged in as musician</h4>
+            <h4>Logged in as {{ current_user.id }}</h4>
             <a id="nav_home_user" href="{{  url_for('index')  }}">Home</a>&nbsp;&nbsp;&nbsp;&nbsp;
-            <a id="nav_chat" href="{{  url_for('chat')  }}">Chat Room</a>&nbsp;&nbsp;&nbsp;&nbsp;
+            <a id="nav_chat" href="{{  url_for('chat')  }}">Chat</a>&nbsp;&nbsp;&nbsp;&nbsp;
             <a id="nav_gallery" href="{{  url_for('gallery')  }}">Gallery</a>&nbsp;&nbsp;&nbsp;&nbsp;
             <a id="nav_logout" href="{{  url_for('logout')  }}">Logout</a>
             {% else %}
@@ -38,6 +38,6 @@
     </body>
 
     <footer>
-      <p align="right">Posted by: Zombie Fan</p>
+      <p align="right">Powered by: Zombie Fan</p>
     </footer>
 </html>

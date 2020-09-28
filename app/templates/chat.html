@@ -2,8 +2,17 @@
 
 
 {% block content %}
-<p>
-	<h2>My nerdy musician, I love you with all my heart</h2>
-</p>
+
+	<form action="" method="post" novalidate>
+		{{ form.hidden_tag() }}
+		<p>
+			{{ form.msg(cols=32, rows=4) }}
+			{{ form.send() }}
+		</p>
+	</form>
+
+	{% for msg in msgs %}
+		<p>{{ msg.from_user_id }}: {{ msg.text }}</p>
+	{% endfor %}
 
 {% endblock %}

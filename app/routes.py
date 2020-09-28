@@ -1,7 +1,7 @@
 from flask import render_template, flash, redirect, session
 from flask_login import current_user, login_user, logout_user
-from app import app, forms
-from app.models import User
+from app import app, forms, db
+from app.models import User, Msg
 
 
 @app.before_request
@@ -35,10 +35,16 @@ def logout():
 	return redirect('/')
 
 
-@app.route('/chat')
+@app.route('/chat', methods=['GET', 'POST'])
 def chat():
 	if current_user.is_authenticated:
-		return render_template('chat.html')
+		form = forms.MsgForm()
+		if form.validate_on_submit():
+			db.session.add(Msg(current_user.id, form.msg.data))
+			db.session.commit()
+			flash('Message sent')
+		msgs = Msg.query.all()[::-1]
+		return render_template('chat.html', form=form, msgs=msgs)
 	return redirect('/')
 
 
