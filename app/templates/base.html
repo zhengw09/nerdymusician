@@ -10,13 +10,12 @@
         <h2>Welcome to the world of musician and coder</h2>
 
           <div class="center">
-            {% if logged_user %}
+            {% if current_user.is_authenticated %}
             <h4>Logged in as musician</h4>
-            <form action="{{  url_for('main_logout')  }}" method="POST">
-                <a id="nav_home_user" href="{{  url_for('index')  }}">Home</a>&nbsp;&nbsp;&nbsp;&nbsp;
-                <a id="nav_chat" href="{{  url_for('index')  }}">Chat Room</a>&nbsp;&nbsp;&nbsp;&nbsp;
-                <a id="nav_gallery" href="{{  url_for('index')  }}">Gallery</a>&nbsp;&nbsp;&nbsp;&nbsp;
-                <input id="nav_logout" type="submit" value="Logout"></form>
+            <a id="nav_home_user" href="{{  url_for('index')  }}">Home</a>&nbsp;&nbsp;&nbsp;&nbsp;
+            <a id="nav_chat" href="{{  url_for('chat')  }}">Chat Room</a>&nbsp;&nbsp;&nbsp;&nbsp;
+            <a id="nav_gallery" href="{{  url_for('gallery')  }}">Gallery</a>&nbsp;&nbsp;&nbsp;&nbsp;
+            <a id="nav_logout" href="{{  url_for('logout')  }}">Logout</a>
             {% else %}
               <a id="nav_home_default" href="{{  url_for('index')  }}">Home</a>&nbsp;&nbsp;&nbsp;&nbsp;
               <a id="nav_login" href="{{  url_for('login')  }}">Login</a>&nbsp;&nbsp;&nbsp;&nbsp;
