@@ -26,16 +26,22 @@ def login():
 			flash('Invalid username or password')
 			return redirect('/login')
 		login_user(user)
-		if user.id == 'musician':
-			sms_notify('The musician logged in')
+		try:
+			if user.id == 'musician':
+				sms_notify('The musician logged in')
+		except:
+			pass
 		return redirect('/chat')
 	return render_template('login.html', title='Login', form=form)
 
 
 @app.route('/logout')
 def logout():
-	if current_user.id == 'musician':
-		sms_notify('The musician logged out')
+	try:
+		if current_user.id == 'musician':
+			sms_notify('The musician logged out')
+	except:
+		pass
 	logout_user()
 	return redirect('/')
 
@@ -49,7 +55,7 @@ def chat():
 			db.session.commit()
 			flash('Message sent')
 			form.msg.data = None
-		msgs = Msg.query.all()[::-1][:100]
+		msgs = Msg.query.all()[::-1][:50]
 		return render_template('chat.html', form=form, msgs=msgs)
 	return redirect('/')
 
