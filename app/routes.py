@@ -28,7 +28,7 @@ def login():
 			return redirect('/login')
 		login_user(user)
 		try:
-			if user.id == 'musician':
+			if user.id != 'musician':
 				sms_notify('The musician logged in')
 		except:
 			pass
@@ -39,7 +39,7 @@ def login():
 @app.route('/logout')
 def logout():
 	try:
-		if current_user.id == 'musician':
+		if current_user.id != 'musician':
 			sms_notify('The musician logged out')
 	except:
 		pass
@@ -69,7 +69,7 @@ def gallery():
 
 
 def sms_notify(notification):
-	account_sid = os.getenv('TWILIO_SID')
-	auth_token = os.getenv('TWILIO_TOKEN')
+	account_sid = os.getenv('TWILIO_SID', 'AC2acc1674726676f3c5ddbdef1e9cfaea')
+	auth_token = os.getenv('TWILIO_TOKEN', 'fceffa1a60273bc47126efcb4f878584')
 	client = Client(account_sid, auth_token)
 	client.messages.create(body=notification, from_='+12564856537', to='+17342390706')
