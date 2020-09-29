@@ -69,7 +69,7 @@ def gallery():
 
 
 def sms_notify(notification):
-	account_sid = os.getenv('TWILIO_SID', 'AC2acc1674726676f3c5ddbdef1e9cfaea')
-	auth_token = os.getenv('TWILIO_TOKEN', 'fceffa1a60273bc47126efcb4f878584')
+	account_sid = os.getenv('TWILIO_SID')
+	auth_token = os.getenv('TWILIO_TOKEN')
 	client = Client(account_sid, auth_token)
 	client.messages.create(body=notification, from_='+12564856537', to='+17342390706')
