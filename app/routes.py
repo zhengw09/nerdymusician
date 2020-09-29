@@ -57,7 +57,7 @@ def chat():
 			db.session.commit()
 			flash('Message sent')
 			form.msg.data = None
-		msgs = Msg.query.all()[::-1][:50]
+		msgs = Msg.query.all()[::-1][:100]
 		return render_template('chat.html', form=form, msgs=msgs)
 	return redirect('/')
 
