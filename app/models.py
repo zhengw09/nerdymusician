@@ -37,11 +37,11 @@ class Msg(db.Model):
 
     def __init__(self, from_user_id, text):
         now = datetime.now()
-        self.msg_id = now.strftime("%Y%m%d, %H:%M:%S,.%f")[-3]
+        self.msg_id = now.strftime("%Y%m%d, %H:%M:%S.%f")[:-3]
         self.from_user_id = from_user_id
         self.text = text
         self.timestamp = now
         self.status = False
 
     def __repr__(self):
-        return '<Msg by {} at {}>'.format(self.from_user_id, self.id)
+        return '<Msg by {} at {}>'.format(self.from_user_id, self.msg_id)

@@ -43,9 +43,14 @@ def chat():
 			db.session.add(Msg(current_user.id, form.msg.data))
 			db.session.commit()
 			flash('Message sent')
-		msgs = Msg.query.all()[::-1]
+			form.msg.data = None
+		msgs = Msg.query.all()[::-1][:100]
 		return render_template('chat.html', form=form, msgs=msgs)
 	return redirect('/')
+
+
+def refresh_chat():
+	return redirect('/chat')
 
 
 @app.route('/gallery')
