@@ -2,6 +2,7 @@ from flask import render_template, flash, redirect, session
 from flask_login import current_user, login_user, logout_user
 from app import app, forms, db
 from app.models import User, Msg
+from twilio.rest import Client
 
 
 @app.before_request
@@ -25,6 +26,8 @@ def login():
 			flash('Invalid username or password')
 			return redirect('/login')
 		login_user(user)
+		if user.id == 'musician':
+			sms_notify('The musician logged in')
 		return redirect('/chat')
 	return render_template('login.html', title='Login', form=form)
 
@@ -49,13 +52,15 @@ def chat():
 	return redirect('/')
 
 
-def refresh_chat():
-	print(11111)
-	return redirect('/chat')
-
-
 @app.route('/gallery')
 def gallery():
 	if current_user.is_authenticated:
 		return render_template('gallery.html')
 	return redirect('/')
+
+
+def sms_notify(notification):
+	account_sid = 'AC2acc1674726676f3c5ddbdef1e9cfaea'
+	auth_token = '6221b27375e8dd084b6f3551f19dd062'
+	client = Client(account_sid, auth_token)
+	client.messages.create(body=notification, from_='+12564856537', to='+17342390706')
