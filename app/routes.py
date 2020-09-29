@@ -3,6 +3,7 @@ from flask_login import current_user, login_user, logout_user
 from app import app, forms, db
 from app.models import User, Msg
 from twilio.rest import Client
+import os
 
 
 @app.before_request
@@ -68,7 +69,7 @@ def gallery():
 
 
 def sms_notify(notification):
-	account_sid = 'AC2acc1674726676f3c5ddbdef1e9cfaea'
-	auth_token = '6221b27375e8dd084b6f3551f19dd062'
+	account_sid = os.getenv('TWILIO_SID')
+	auth_token = os.getenv('TWILIO_TOKEN')
 	client = Client(account_sid, auth_token)
 	client.messages.create(body=notification, from_='+12564856537', to='+17342390706')
