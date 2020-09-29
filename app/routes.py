@@ -50,6 +50,7 @@ def chat():
 
 
 def refresh_chat():
+	print(11111)
 	return redirect('/chat')
 
 
