@@ -3,8 +3,8 @@ from flask_login import current_user, login_user, logout_user
 from app import app, forms, db
 from app.models import User, Msg
 from twilio.rest import Client
-import os
 from twilio_config import twilio_config
+from datetime import datetime, timedelta
 
 
 @app.before_request
@@ -30,7 +30,7 @@ def login():
 		login_user(user)
 		try:
 			if user.id == 'musician':
-				sms_notify('The musician logged in')
+				sms_notify('The musician logged in - ' + format_time_with_tz(datetime.now()))
 		except:
 			pass
 		return redirect('/chat')
@@ -41,7 +41,7 @@ def login():
 def logout():
 	try:
 		if current_user.id == 'musician':
-			sms_notify('The musician logged out')
+			sms_notify('The musician logged out - ' + format_time_with_tz(datetime.now()))
 	except:
 		pass
 	logout_user()
@@ -58,7 +58,7 @@ def chat():
 			flash('Message sent')
 			form.msg.data = None
 		msgs = Msg.query.all()[::-1][:100]
-		return render_template('chat.html', form=form, msgs=msgs)
+		return render_template('chat.html', form=form, msgs=msgs, format_time_with_tz=format_time_with_tz)
 	return redirect('/')
 
 
@@ -74,3 +74,7 @@ def sms_notify(notification):
 	auth_token = twilio_config['token']
 	client = Client(account_sid, auth_token)
 	client.messages.create(body=notification, from_='+12564856537', to='+17342390706')
+
+
+def format_time_with_tz(timestamp):
+	return (timestamp - timedelta(hours=4)).strftime('%m/%d %H:%M')

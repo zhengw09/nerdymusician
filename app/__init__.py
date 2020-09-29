@@ -9,6 +9,6 @@ app.secret_key = 'ThisWillBeOurYear'
 app.config.from_object(Config)
 db = SQLAlchemy(app)
 login = LoginManager(app)
-app.permanent_session_lifetime = timedelta(minutes=3)
+app.permanent_session_lifetime = timedelta(minutes=5)
 
 from app import routes, models
