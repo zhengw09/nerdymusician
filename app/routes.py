@@ -34,6 +34,8 @@ def login():
 
 @app.route('/logout')
 def logout():
+	if current_user.id == 'musician':
+		sms_notify('The musician logged out')
 	logout_user()
 	return redirect('/')
 
