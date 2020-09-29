@@ -12,11 +12,11 @@
 		</p>
 	</form>
 
-	<p>
+
 	{% for msg in msgs %}
-		{{ msg.from_user_id }}&nbsp;({{ msg.timestamp.strftime("%m-%d %H:%M:%S")  }})&nbsp;:<br>
-		{{ msg.text }}<br>
+		<p>{{ msg.from_user_id }}&nbsp;({{ msg.timestamp.strftime("%m-%d %H:%M:%S")  }})&nbsp;:<br>
+		{{ msg.text }}</p>
 	{% endfor %}
-	</p>
+
 
 {% endblock %}
