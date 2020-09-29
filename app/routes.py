@@ -28,7 +28,7 @@ def login():
 			return redirect('/login')
 		login_user(user)
 		try:
-			if user.id != 'musician':
+			if user.id == 'musician':
 				sms_notify('The musician logged in')
 		except:
 			pass
@@ -39,7 +39,7 @@ def login():
 @app.route('/logout')
 def logout():
 	try:
-		if current_user.id != 'musician':
+		if current_user.id == 'musician':
 			sms_notify('The musician logged out')
 	except:
 		pass
