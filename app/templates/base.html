@@ -8,15 +8,14 @@
     </head>
 
     <body>
-        <h3>Welcome to the world of musician and coder</h3>
+        <h4>Welcome to the world of musician and coder</h4>
 
           <div class="center">
             {% if current_user.is_authenticated %}
-            <p>Logged in as {{ current_user.id }}</p>
             <a id="nav_home_user" href="{{  url_for('index')  }}">Home</a>&nbsp;&nbsp;&nbsp;&nbsp;
             <a id="nav_chat" href="{{  url_for('chat')  }}">Chat</a>&nbsp;&nbsp;&nbsp;&nbsp;
             <a id="nav_gallery" href="{{  url_for('gallery')  }}">Gallery</a>&nbsp;&nbsp;&nbsp;&nbsp;
-            <a id="nav_logout" href="{{  url_for('logout')  }}">Logout</a>
+            <a id="nav_logout" href="{{  url_for('logout')  }}">Logout {{ current_user.id }}</a>
             {% else %}
               <a id="nav_home_default" href="{{  url_for('index')  }}">Home</a>&nbsp;&nbsp;&nbsp;&nbsp;
               <a id="nav_login" href="{{  url_for('login')  }}">Login</a>&nbsp;&nbsp;&nbsp;&nbsp;
