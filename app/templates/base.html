@@ -8,9 +8,8 @@
     </head>
 
     <body>
-        <h4>Welcome to the world of musician and coder</h4>
-
-          <div class="center">
+        <div class="center">
+            <h4>Welcome to the world of musician and coder</h4>
             {% if current_user.is_authenticated %}
             <a id="nav_home_user" href="{{  url_for('index')  }}">Home</a>&nbsp;&nbsp;&nbsp;&nbsp;
             <a id="nav_chat" href="{{  url_for('chat')  }}">Chat</a>&nbsp;&nbsp;&nbsp;&nbsp;
@@ -24,7 +23,7 @@
             <br><br>
             {% block content %}
             {% endblock %}
-          </div>
+        </div>
 
 
         <p>
