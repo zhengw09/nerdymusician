@@ -1,6 +1,7 @@
 .DS_Store
 .idea/
 data/
+twilio_config.py
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

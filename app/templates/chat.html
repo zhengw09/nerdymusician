@@ -14,7 +14,7 @@
 
 
 	{% for msg in msgs %}
-		<p>{{ msg.from_user_id }}&nbsp;({{ msg.timestamp.strftime("%m-%d %H:%M")  }})&nbsp;:&nbsp;{{ msg.text }}</p>
+	<p><strong>{{ msg.from_user_id }}</strong>&nbsp;({{ msg.timestamp.strftime("%m-%d %H:%M")  }})&nbsp;:&nbsp;{{ msg.text }}</p>
 	{% endfor %}
 
 
