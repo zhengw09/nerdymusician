@@ -3,7 +3,7 @@
 
 {% block content %}
 	<p class="important">
-		<img src="/static/images/image1.jpg" class="responsive">
+		<a href="{{ url_for('gallery', current_pic=next_pic) }}"><img src="/static/images/{{ current_pic }}.jpg" class="responsive"></a>
 	</p>
 
 {% endblock %}

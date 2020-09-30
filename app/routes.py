@@ -1,4 +1,4 @@
-from flask import render_template, flash, redirect, session
+from flask import render_template, flash, redirect, session, request
 from flask_login import current_user, login_user, logout_user
 from app import app, forms, db
 from app.models import User, Msg
@@ -64,8 +64,10 @@ def chat():
 
 @app.route('/gallery')
 def gallery():
+	current_pic = request.args.get('current_pic', 'image1')
+	next_pic = 'image2' if current_pic == 'image1' else 'image1'
 	if current_user.is_authenticated:
-		return render_template('gallery.html')
+		return render_template('gallery.html', current_pic=current_pic, next_pic=next_pic)
 	return redirect('/')
 
 
