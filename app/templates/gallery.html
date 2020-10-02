@@ -3,6 +3,7 @@
 
 {% block content %}
 
+	<h4>Albums</h4>
 	{% for album in albums %}
 		<p class="important">
 			<a href="{{ url_for('album', title=album.title) }}">{{ album.title }}</a>
