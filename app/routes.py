@@ -1,7 +1,7 @@
 from flask import render_template, flash, redirect, session, request
 from flask_login import current_user, login_user, logout_user
 from app import app, forms, db
-from app.models import User, Msg
+from app.models import User, Msg, Album, Image
 from twilio.rest import Client
 from twilio_config import twilio_config
 from datetime import datetime, timedelta
@@ -64,10 +64,22 @@ def chat():
 
 @app.route('/gallery')
 def gallery():
-	current_pic = request.args.get('current_pic', 'image1')
-	next_pic = 'image2' if current_pic == 'image1' else 'image1'
 	if current_user.is_authenticated:
-		return render_template('gallery.html', current_pic=current_pic, next_pic=next_pic)
+		albums = Album.query.all()
+		return render_template('gallery.html', albums=albums)
+	return redirect('/')
+
+
+@app.route('/album')
+def album():
+	if current_user.is_authenticated:
+		title = request.args.get('title')
+		images = Image.query.filter_by(album=title).all()
+		if not images:
+			return redirect('/gallery')
+		current_idx = int(request.args.get('idx', '0'))
+		next_idx = current_idx + 1 if current_idx < len(images) - 1 else 0
+		return render_template('images.html', current=images[current_idx], next=images[next_idx], next_idx=next_idx)
 	return redirect('/')
 
 
