@@ -74,7 +74,7 @@ class Image(db.Model):
     uploaded_timestamp = db.Column(db.DateTime, index=True)
     uploaded_by = db.Column(db.String(64))
 
-    def __init__(self, image_id, fmt, album, caption=None, uploaded_by='admin'):
+    def __init__(self, image_id, fmt, album, caption="", uploaded_by='admin'):
         self.image_id = image_id
         self.format = fmt
         self.album = album
