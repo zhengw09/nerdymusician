@@ -67,7 +67,16 @@ def chat():
 		flash('Message sent')
 		return redirect(request.url)
 	msgs = Msg.query.all()[::-1]
-	return render_template('chat.html', form=form, msgs=msgs, format_time_with_tz=format_time_with_tz)
+	unread_msgs = set()
+	for msg in msgs:
+		if not msg.status:
+			unread_msgs.add(msg.msg_id)
+			if msg.from_user_id != current_user.id:
+				msg.status = True
+		elif msg.status and msg.from_user_id != current_user.id:
+			break
+	db.session.commit()
+	return render_template('chat.html', form=form, msgs=msgs, format_time_with_tz=format_time_with_tz, unread_msgs=unread_msgs)
 
 
 @app.route('/gallery')

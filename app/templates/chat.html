@@ -14,7 +14,7 @@
 
 
 	{% for msg in msgs %}
-	<p><strong>{{ msg.from_user_id }}</strong>&nbsp;({{ format_time_with_tz(msg.timestamp) }})&nbsp;:&nbsp;{{ msg.text }}</p>
+	<p><span class="bold {{ 'unread' if msg.msg_id in unread_msgs }}">{{ msg.from_user_id }}</span>&nbsp;({{ format_time_with_tz(msg.timestamp) }})&nbsp;:&nbsp;{{ msg.text }}</p>
 	{% endfor %}
 
 
