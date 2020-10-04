@@ -8,6 +8,11 @@ from datetime import datetime, timedelta
 from werkzeug.utils import secure_filename
 import hashlib
 import os
+from pyheif import read_heif
+from PIL import Image as ImagePIL
+
+
+IMAGE_FORMATS = ['png', 'jpg', 'bmp', 'gif', 'heic']
 
 
 @app.before_request
@@ -88,8 +93,15 @@ def album():
 		filename = secure_filename(f.filename)
 		image_id = generate_image_id(album_title, filename)
 		fmt = filename.split('.')[-1].lower()
-		hashed_file_name = '{}.{}'.format(image_id, fmt)
-		f.save(os.path.join(os.getcwd(), 'app/static/images', hashed_file_name))
+		if fmt not in IMAGE_FORMATS:
+			return redirect(request.url)
+		if fmt == 'heic':
+			fmt = 'jpg'
+			hashed_file_name = '{}.{}'.format(image_id, fmt)
+			heic_to_jpg(f, hashed_file_name)
+		else:
+			hashed_file_name = '{}.{}'.format(image_id, fmt)
+			f.save(os.path.join(os.getcwd(), 'app/static/images', hashed_file_name))
 		image = Image(image_id, fmt, album_title, caption=caption, uploaded_by=current_user.id)
 		db.session.add(image)
 		db.session.commit()
@@ -125,3 +137,9 @@ def format_time_with_tz(timestamp):
 def generate_image_id(album, filename):
 	timestamp_str = datetime.now().strftime('%Y%m%d%H%M%S')
 	return hashlib.md5((album + filename + timestamp_str).encode('utf-8')).hexdigest()
+
+
+def heic_to_jpg(f, hashed_file_name):
+	image_heic = read_heif(f)
+	image_jpg = ImagePIL.frombytes(mode=image_heic.mode, size=image_heic.size, data=image_heic.data)
+	image_jpg.save(os.path.join(os.getcwd(), 'app/static/images', hashed_file_name), format="jpeg")
