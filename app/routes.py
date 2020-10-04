@@ -84,8 +84,6 @@ def album():
 		return redirect('/')
 	album_title = request.args.get('title')
 	images = Image.query.filter_by(album=album_title).all()
-	if not images:
-		return redirect('/gallery')
 	form = forms.ImageForm()
 	if form.validate_on_submit():
 		f = form.image.data
