@@ -88,16 +88,20 @@ def album():
 		return redirect('/gallery')
 	form = forms.ImageForm()
 	if form.validate_on_submit():
+		print(111111111)
 		f = form.image.data
 		caption = form.caption.data
 		filename = secure_filename(f.filename)
+		print(filename)
 		image_id = generate_image_id(album_title, filename)
 		fmt = filename.split('.')[-1].lower()
 		if fmt not in IMAGE_FORMATS:
 			return redirect(request.url)
 		if fmt == 'heic':
+			print(2222222)
 			fmt = 'jpg'
 			hashed_file_name = '{}.{}'.format(image_id, fmt)
+			print(hashed_file_name)
 			heic_to_jpg(f, hashed_file_name)
 		else:
 			hashed_file_name = '{}.{}'.format(image_id, fmt)
