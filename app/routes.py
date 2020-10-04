@@ -98,6 +98,7 @@ def album():
 		if fmt == 'heic':
 			fmt = 'jpg'
 			hashed_file_name = '{}.{}'.format(image_id, fmt)
+			print(hashed_file_name)
 			heic_to_jpg(f, hashed_file_name)
 		else:
 			hashed_file_name = '{}.{}'.format(image_id, fmt)
