@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+	<p class="important">
+		<a href="{{ url_for('image', image_id=next.image_id) }}">
+			<img src="/static/images/{{ curr.image_id }}.{{ curr.format }}" class="responsive">
+		</a>
+	</p>
+	<p>
+		{{  curr.caption  }}
+	</p>
+
+{% endblock %}

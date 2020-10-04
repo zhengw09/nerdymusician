@@ -1,8 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, TextAreaField, SubmitField
+from flask_wtf.file import FileField, FileRequired
 from wtforms.validators import DataRequired
-
-__all__ = ['LoginForm', 'MsgForm']
 
 
 class LoginForm(FlaskForm):
@@ -14,3 +13,9 @@ class LoginForm(FlaskForm):
 class MsgForm(FlaskForm):
     msg = TextAreaField('Msg', validators=[DataRequired()])
     send = SubmitField('Send')
+
+
+class ImageForm(FlaskForm):
+    image = FileField(validators=[FileRequired()])
+    caption = TextAreaField('Caption')
+    upload = SubmitField('Upload')

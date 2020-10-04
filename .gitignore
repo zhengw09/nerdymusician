@@ -2,6 +2,7 @@
 .idea/
 data/
 twilio_config.py
+app/static/images/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

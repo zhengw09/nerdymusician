@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+
+
+	<p>
+	{% for image in images %}
+        <a href="{{  url_for('image', image_id=image.image_id)  }}">
+        <img src="/static/images/{{ image.image_id }}.{{ image.format }}" class="img-thumbnail" style="width:128px;padding:5px; ">
+        </a>
+	{% endfor %}
+	</p>
+
+	<p>
+		<form method=post enctype=multipart/form-data>
+			{{ form.hidden_tag() }}
+			{{ form.image() }}
+			{{ form.upload() }}<br>
+			{{ form.caption(cols=32, rows=4) }}
+		</form>
+	</p>
+
+{% endblock %}
