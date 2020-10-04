@@ -68,14 +68,17 @@ def chat():
 		return redirect(request.url)
 	msgs = Msg.query.all()[::-1]
 	unread_msgs = set()
+	commit_flag = False
 	for msg in msgs:
 		if not msg.status:
 			unread_msgs.add(msg.msg_id)
 			if msg.from_user_id != current_user.id:
+				commit_flag = True
 				msg.status = True
 		elif msg.status and msg.from_user_id != current_user.id:
 			break
-	db.session.commit()
+	if commit_flag:
+		db.session.commit()
 	return render_template('chat.html', form=form, msgs=msgs, format_time_with_tz=format_time_with_tz, unread_msgs=unread_msgs)
 
 
