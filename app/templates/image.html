@@ -11,4 +11,15 @@
 		{{  curr.caption  }}
 	</p>
 
+	{% for comment in comments %}
+		<p><span class="bold">{{ comment.from_user_id }}</span>&nbsp;({{ format_time_with_tz(comment.timestamp) }})&nbsp;:&nbsp;{{ comment.text }}</p>
+	{% endfor %}
+
+	<form action="" method="post" novalidate>
+		{{ form.hidden_tag() }}
+		<p>
+			{{ form.msg(cols=32, rows=2) }}&nbsp;&nbsp;{{ form.send() }}
+		</p>
+	</form>
+
 {% endblock %}

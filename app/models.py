@@ -73,6 +73,7 @@ class Image(db.Model):
     caption = db.Column(db.Text)
     uploaded_timestamp = db.Column(db.DateTime, index=True)
     uploaded_by = db.Column(db.String(64))
+    comments = db.relationship('ImageComment', backref=db.backref('comment_of', lazy=True))
 
     def __init__(self, image_id, fmt, album, caption="", uploaded_by='admin'):
         self.image_id = image_id
@@ -87,3 +88,22 @@ class Image(db.Model):
 
     def set_caption(self, caption):
         self.caption = caption
+
+
+class ImageComment(db.Model):
+    comment_id = db.Column(db.String(64), primary_key=True)
+    image_id = db.Column(db.String(64), db.ForeignKey('image.image_id'))
+    from_user_id = db.Column(db.String(64))
+    text = db.Column(db.Text)
+    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+
+    def __init__(self, image_id, from_user_id, text):
+        now = datetime.now()
+        self.comment_id = now.strftime("%Y%m%d, %H:%M:%S.%f")[:-3]
+        self.image_id = image_id
+        self.from_user_id = from_user_id
+        self.text = text
+        self.timestamp = now
+
+    def __repr__(self):
+        return '<Comment for {} by {} at {}>'.format(self.image_id, self.from_user_id, self.comment_id)
