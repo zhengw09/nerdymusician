@@ -1,3 +1,16 @@
+body {
+  background-color: black;
+  color: #b3b3b3;
+}
+
+a:link {
+  color: #1affff;
+}
+
+a:visited {
+  color: #9999ff;
+}
+
 .responsive {
   width: 80%;
   height: auto;
@@ -8,5 +21,13 @@
 }
 
 .unread {
-  color: blue;
+  color: #9999ff;
+}
+
+.mus {
+  color: #ff33dd;
+}
+
+.coder {
+  color: #80ccff;
 }
