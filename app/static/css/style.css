@@ -11,6 +11,10 @@ a:visited {
   color: #9999ff;
 }
 
+textarea {
+  background-color: #f2f2f2;
+}
+
 .responsive {
   width: 80%;
   height: auto;
