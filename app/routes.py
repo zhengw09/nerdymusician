@@ -66,7 +66,7 @@ def chat():
 		db.session.commit()
 		flash('Message sent')
 		return redirect(request.url)
-	msgs = Msg.query.all()[::-1][:500]
+	msgs = Msg.query.all()[::-1][:1000]
 	unread_msgs = set()
 	commit_flag = False
 	for msg in msgs:
