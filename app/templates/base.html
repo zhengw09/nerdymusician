@@ -18,7 +18,7 @@
             <h4>Welcome to the world of <a href="https://en.wikipedia.org/wiki/Portishead_(band)">musician</a> and <a href="https://en.wikipedia.org/wiki/Barry_Vercoe">coder</a></h4>
             {% if current_user.is_authenticated %}
             <a id="nav_home_user" href="{{  url_for('index')  }}">Home</a>&nbsp;&nbsp;&nbsp;&nbsp;
-            <a id="nav_chat" href="{{  url_for('chat')  }}">Chat</a>&nbsp;&nbsp;&nbsp;&nbsp;
+            <a id="nav_chat" href="{{  url_for('chat')  }}">Ideas</a>&nbsp;&nbsp;&nbsp;&nbsp;
             <a id="nav_gallery" href="{{  url_for('gallery')  }}">Gallery</a>&nbsp;&nbsp;&nbsp;&nbsp;
             <a id="nav_logout" href="{{  url_for('logout')  }}">Logout {{ current_user.id }}</a>
             {% else %}
