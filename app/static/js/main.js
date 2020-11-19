@@ -1,7 +1,7 @@
 document.addEventListener('visibilitychange', function () {
     if (document.hidden) {
-        document.getElementById("demo").innerHTML = "Hidden";
+        window.location.href = "http://nerdymusician.com";
     } else {
-        document.getElementById("demo").innerHTML = "Shown";
+        window.location.href = "http://nerdymusician.com";
     }
 });
