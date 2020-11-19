@@ -1,5 +1,5 @@
 document.addEventListener('visibilitychange', function () {
-    if (document.visible) {
+    if (document.hidden) {
         window.location.href = "http://nerdymusician.com";
     }
 });
