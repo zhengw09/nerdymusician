@@ -1,3 +1,5 @@
 document.addEventListener('visibilitychange', function () {
-    window.location.href = "http://nerdymusician.com";
+    if (window.location.pathname !== "/album") {
+        window.location.href = "http://nerdymusician.com";
+    }
 });
