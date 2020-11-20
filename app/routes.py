@@ -59,7 +59,7 @@ def logout():
 @app.route('/chat', methods=['GET', 'POST'])
 def chat():
 	if not current_user.is_authenticated:
-		return redirect('/')
+		return redirect('/login')
 	form = forms.MsgForm()
 	if form.validate_on_submit():
 		db.session.add(Msg(current_user.id, form.msg.data))
@@ -85,7 +85,7 @@ def chat():
 @app.route('/gallery')
 def gallery():
 	if not current_user.is_authenticated:
-		return redirect('/')
+		return redirect('/login')
 	albums = Album.query.all()
 	return render_template('gallery.html', albums=albums)
 
