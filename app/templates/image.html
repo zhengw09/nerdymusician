@@ -10,6 +10,9 @@
 	<p>
 		{{  curr.caption  }}
 	</p>
+	<p class="unread">
+		Uploaded by {{  curr.uploaded_by  }} at {{  format_time_with_tz(curr.uploaded_timestamp)  }}
+	</p>
 
 	{% for comment in comments %}
 		<p><span class="bold">{{ comment.from_user_id }}</span>&nbsp;({{ format_time_with_tz(comment.timestamp) }})&nbsp;:&nbsp;{{ comment.text }}</p>
