@@ -129,13 +129,14 @@ def image():
 		return redirect('/gallery')
 	album = Album.query.filter_by(title=image.album).first()
 	curr_idx = album.images.index(image)
+	prev_idx = curr_idx - 1 if curr_idx > 0 else len(album.images) - 1
 	next_idx = curr_idx + 1 if curr_idx < len(album.images) - 1 else 0
 	form = forms.MsgForm()
 	if form.validate_on_submit():
 		db.session.add(ImageComment(image_id, current_user.id, form.msg.data))
 		db.session.commit()
 		return redirect(request.url)
-	return render_template('image.html', curr=image, next=album.images[next_idx], comments=image.comments, format_time_with_tz=format_time_with_tz, form=form)
+	return render_template('image.html', curr=image, prev=album.images[prev_idx], next=album.images[next_idx], comments=image.comments, format_time_with_tz=format_time_with_tz, form=form)
 
 
 def sms_notify(notification):

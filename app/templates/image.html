@@ -3,15 +3,17 @@
 
 {% block content %}
 	<p class="important">
-		<a href="{{ url_for('image', image_id=next.image_id) }}">
-			<img src="/static/images/{{ curr.image_id }}.{{ curr.format }}" class="responsive">
-		</a>
+		<img src="/static/images/{{ curr.image_id }}.{{ curr.format }}" class="responsive">
+	</p>
+	<p>
+		<a href="{{ url_for('image', image_id=prev.image_id) }}">Prev</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<a href="{{ url_for('image', image_id=next.image_id) }}">Next</a>
 	</p>
 	<p>
 		{{  curr.caption  }}
 	</p>
 	<p class="unread" align="right">
-		Uploaded by {{  curr.uploaded_by  }} at {{  format_time_with_tz(curr.uploaded_timestamp)  }}
+		uploaded by {{  curr.uploaded_by  }} at {{  format_time_with_tz(curr.uploaded_timestamp)  }}
 	</p>
 
 	{% for comment in comments %}
