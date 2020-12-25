@@ -143,7 +143,7 @@ def sms_notify(notification):
 	account_sid = twilio_config['sid']
 	auth_token = twilio_config['token']
 	client = Client(account_sid, auth_token)
-	client.messages.create(body=notification, from_='+12015286815', to='+12066367689')
+	client.messages.create(body=notification, from_='+12564856537', to='+12066367689')
 
 
 def format_time_with_tz(timestamp):
