@@ -62,7 +62,12 @@ def chat():
 		return redirect('/login')
 	form = forms.MsgForm()
 	if form.validate_on_submit():
-		db.session.add(Msg(current_user.id, form.msg.data))
+		msg = Msg(current_user.id, form.msg.data)
+		if current_user.id == 'mus':
+			last_msg_tm = Msg.query.filter_by(from_user_id='mus')[-1].timestamp
+			if msg.timestamp - last_msg_tm > timedelta(seconds=60):
+				sms_notify("海兔宝宝({})：".format(format_time_with_tz(msg.timestamp)) + msg.text)
+		db.session.add(msg)
 		db.session.commit()
 		flash('Message sent')
 		return redirect(request.url)
