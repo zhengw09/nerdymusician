@@ -66,7 +66,7 @@ def chat():
 		if current_user.id == 'mus':
 			last_msg_tm = Msg.query.filter_by(from_user_id='mus')[-1].timestamp
 			if msg.timestamp - last_msg_tm > timedelta(seconds=60):
-				sms_notify("海兔宝宝({})：".format(format_time_with_tz(msg.timestamp)) + msg.text)
+				sms_notify("小茉莉公主({})：".format(format_time_with_tz(msg.timestamp)) + msg.text)
 		db.session.add(msg)
 		db.session.commit()
 		flash('Message sent')
