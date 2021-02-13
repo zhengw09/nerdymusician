@@ -3,13 +3,14 @@ from flask_login import current_user, login_user, logout_user
 from app import app, forms, db
 from app.models import User, Msg, Album, Image, ImageComment
 from twilio.rest import Client
-from twilio_config import twilio_config
+from twilio_config import twilio_config, pushover_config
 from datetime import datetime, timedelta
 from werkzeug.utils import secure_filename
 import hashlib
 import os
 from pyheif import read_heif
 from PIL import Image as ImagePIL
+import http.client, urllib
 
 
 IMAGE_FORMATS = ['png', 'jpg', 'bmp', 'gif', 'heic', 'jpeg']
@@ -36,22 +37,16 @@ def login():
 			flash('Invalid username or password')
 			return redirect('/login')
 		login_user(user)
-		try:
-			if user.id == 'mus':
-				sms_notify('The musician logged in - ' + format_time_with_tz(datetime.now()))
-		except:
-			pass
+		if user.id == 'mus':
+			pushover_notify('小茉莉公主上线啦 - ' + format_time_with_tz(datetime.now()))
 		return redirect('/chat')
 	return render_template('login.html', title='Login', form=form)
 
 
 @app.route('/logout')
 def logout():
-	try:
-		if current_user.id == 'mus':
-			sms_notify('The musician logged out - ' + format_time_with_tz(datetime.now()))
-	except:
-		pass
+	if current_user.id == 'mus':
+		pushover_notify('The musician logged out - ' + format_time_with_tz(datetime.now()))
 	logout_user()
 	return redirect('/')
 
@@ -66,7 +61,7 @@ def chat():
 		if current_user.id == 'mus':
 			last_msg_tm = Msg.query.filter_by(from_user_id='mus')[-1].timestamp
 			if msg.timestamp - last_msg_tm > timedelta(seconds=60):
-				sms_notify("小茉莉公主({})：".format(format_time_with_tz(msg.timestamp)) + msg.text)
+				pushover_notify("小茉莉公主({})：".format(format_time_with_tz(msg.timestamp)) + msg.text)
 		db.session.add(msg)
 		db.session.commit()
 		flash('Message sent')
@@ -144,11 +139,28 @@ def image():
 	return render_template('image.html', curr=image, prev=album.images[prev_idx], next=album.images[next_idx], comments=image.comments, format_time_with_tz=format_time_with_tz, form=form)
 
 
-def sms_notify(notification):
-	account_sid = twilio_config['sid']
-	auth_token = twilio_config['token']
-	client = Client(account_sid, auth_token)
-	client.messages.create(body=notification, from_='+12564856537', to='+12066367689')
+# def sms_notify(notification):
+# 	try:
+# 		account_sid = twilio_config['sid']
+# 		auth_token = twilio_config['token']
+# 		client = Client(account_sid, auth_token)
+# 		client.messages.create(body=notification, from_='+12564856537', to='+12066367689')
+# 	except:
+# 		pass
+
+
+def pushover_notify(notification):
+	try:
+		conn = http.client.HTTPSConnection("api.pushover.net:443")
+		conn.request("POST", "/1/messages.json",
+					 urllib.parse.urlencode({
+						 "token": pushover_config['token'],
+						 "user": pushover_config['user'],
+						 "message": notification,
+					 }), {"Content-type": "application/x-www-form-urlencoded"})
+		conn.getresponse()
+	except:
+		pass
 
 
 def format_time_with_tz(timestamp):
