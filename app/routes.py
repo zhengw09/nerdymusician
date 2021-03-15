@@ -164,7 +164,7 @@ def pushover_notify(notification):
 
 
 def format_time_with_tz(timestamp):
-	return (timestamp - timedelta(hours=5)).strftime('%m/%d %H:%M')
+	return (timestamp - timedelta(hours=4)).strftime('%m/%d %H:%M')
 
 
 def generate_image_id(album, filename):
